@@ -19,6 +19,7 @@ const storage = {
 };
 
 export default function Home() {
+  const [isMounted, setIsMounted] = useState(false);
   const [view, setView] = useState('login');
   const [role, setRole] = useState(null);
   const [password, setPassword] = useState('');
@@ -38,6 +39,7 @@ export default function Home() {
   const fileInputRef = useRef<any>(null);
 
   useEffect(() => {
+    setIsMounted(true);
     const loadData = async () => {
       try {
         const colData = await storage.get('zip_portal_columns');
@@ -222,6 +224,8 @@ export default function Home() {
       setTimeout(() => setUploadStatus(''), 3000);
     }
   };
+
+  if (!isMounted) return null;
 
   if (view === 'login') {
     return (
